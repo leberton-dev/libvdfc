@@ -1,0 +1,40 @@
+"AppState"
+{
+	"appid"		"239820"
+	"universe"		"1"
+	"name"		"Game Dev Tycoon"
+	"StateFlags"		"4"
+	"installdir"		"Game Dev Tycoon"
+	"LastUpdated"		"1769962009"
+	"LastPlayed"		"1769962080"
+	"SizeOnDisk"		"274012332"
+	"StagingSize"		"0"
+	"buildid"		"20332874"
+	"LastOwner"		"76561198111254205"
+	"DownloadType"		"1"
+	"UpdateResult"		"0"
+	"BytesToDownload"		"345649680"
+	"BytesDownloaded"		"345649680"
+	"BytesToStage"		"931243864"
+	"BytesStaged"		"931243864"
+	"TargetBuildID"		"20332874"
+	"AutoUpdateBehavior"		"0"
+	"AllowOtherDownloadsWhileRunning"		"0"
+	"ScheduledAutoUpdate"		"0"
+	"InstalledDepots"
+	{
+		"239823"
+		{
+			"manifest"		"5567149145642665508"
+			"size"		"274012332"
+		}
+	}
+	"UserConfig"
+	{
+		"language"		"english"
+	}
+	"MountedConfig"
+	{
+		"language"		"english"
+	}
+}
