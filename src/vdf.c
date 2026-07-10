@@ -1,9 +1,9 @@
-#include "vdf_errors.h"
+#include "vdfc/errors.h"
 
 #include <stdio.h>
 #include <stdlib.h>
 
-VDFcode read_entire_file(const char *path, char **out, size_t *out_size)
+VDFcode vdf_read_file(const char *path, char **out, size_t *out_size)
 {
 	FILE   *f;
 	char   *buf = NULL;

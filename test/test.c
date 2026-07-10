@@ -2,15 +2,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "../include/vdf.h"
-#include "../include/vdf_token.h"
+#include "vdfc/vdf.h"
 
 static void test_read_entire_file(void)
 {
 	char  *out;
 	size_t out_size;
 
-	VDFcode err = read_entire_file("test/fixtures/libraryfolders.vdf", &out, &out_size);
+	VDFcode err = vdf_read_file("test/fixtures/libraryfolders.vdf", &out, &out_size);
 
 	if (err != VDF_OK)
 	{
@@ -53,7 +52,7 @@ static void test_lexer(void)
 	char  *out;
 	size_t out_size;
 
-	VDFcode err = read_entire_file("test/fixtures/libraryfolders.vdf", &out, &out_size);
+	VDFcode err = vdf_read_file("test/fixtures/libraryfolders.vdf", &out, &out_size);
 
 	if (err != VDF_OK)
 	{

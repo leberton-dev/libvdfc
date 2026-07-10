@@ -7,7 +7,7 @@ CFLAGS = -Wall -Wextra -Werror
 INCLUDE = -I./include
 AR = ar rcs
 RM = rm -f
-HEADER = include/vdf.h include/vdf_errors.h include/vdf_token.h
+HEADER = include/vdfc/vdf.h include/vdfc/errors.h include/vdfc/token.h include/vdfc/lexer.h
 
 all: $(NAME)
 

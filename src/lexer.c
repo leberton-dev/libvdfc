@@ -1,4 +1,4 @@
-#include "vdf_token.h"
+#include "vdfc/lexer.h"
 
 static int is_whitespace(char c)
 {

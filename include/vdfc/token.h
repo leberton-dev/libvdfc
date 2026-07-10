@@ -20,11 +20,4 @@ typedef struct s_VDFToken
 	size_t       len;
 } VDFToken;
 
-typedef struct s_VDFLexer
-{
-	const char *cursor;
-} VDFLexer;
-
-VDFToken vdf_next_token(VDFLexer *lexer);
-
 #endif
