@@ -1,5 +1,5 @@
 NAME = libvdfc.a
-SRCS = src/vdf.c src/lexer.c
+SRCS = src/vdf.c src/lexer.c src/parser.c
 OBJDIR = build
 OBJS = $(patsubst src/%.c,$(OBJDIR)/%.o,$(SRCS))
 
@@ -8,9 +8,9 @@ CFLAGS = -Wall -Wextra -Werror
 INCLUDE = -I./include
 AR = ar rcs
 RM = rm -rf
-HEADER = include/vdfc/vdf.h include/vdfc/errors.h include/vdfc/token.h include/vdfc/lexer.h
+HEADER = include/vdfc/vdf.h include/vdfc/errors.h include/vdfc/token.h include/vdfc/lexer.h include/vdfc/node.h include/vdfc/parser.h
 
-TEST_SRC = test/test_main.c test/test_read_file.c test/test_lexer.c test/test_utils.c
+TEST_SRC = test/test_main.c test/test_read_file.c test/test_lexer.c test/test_utils.c test/test_parser.c
 TEST_BIN = $(OBJDIR)/test_runner
 
 all: $(NAME)

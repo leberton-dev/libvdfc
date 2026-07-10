@@ -6,7 +6,8 @@ typedef enum e_VDFcode
 	VDF_OK = 0,
 	VDF_ERR_OPEN,
 	VDF_ERR_IO,
-	VDF_ERR_MALLOC
+	VDF_ERR_MALLOC,
+	VDF_ERR_PARSE
 } VDFcode;
 
 #endif
