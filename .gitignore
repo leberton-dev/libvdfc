@@ -56,6 +56,4 @@ dkms.conf
 
 .cache
 compile_commands.json
-
-#test
-test_runner
+build/
