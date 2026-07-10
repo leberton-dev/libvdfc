@@ -1,5 +1,5 @@
-#ifndef LIB_VDF_C
-#define LIB_VDF_C
+#ifndef LIB_VDF_H
+#define LIB_VDF_H
 
 #include <stdlib.h>
 
