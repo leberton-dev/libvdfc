@@ -1,7 +1,7 @@
 #ifndef VDF_ERRORS_H
 #define VDF_ERRORS_H
 
-typedef enum s_VDFcode
+typedef enum e_VDFcode
 {
 	VDF_OK = 0,
 	VDF_ERR_OPEN,

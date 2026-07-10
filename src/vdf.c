@@ -1,4 +1,4 @@
-#include "../include/vdf_errors.h"
+#include "vdf_errors.h"
 
 #include <stdio.h>
 #include <stdlib.h>

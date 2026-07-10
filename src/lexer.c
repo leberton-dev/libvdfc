@@ -1,4 +1,4 @@
-#include "../include/vdf_token.h"
+#include "vdf_token.h"
 
 static int is_whitespace(char c)
 {
