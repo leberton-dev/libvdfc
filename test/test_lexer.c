@@ -94,6 +94,21 @@ static void test_lexer_unknown_char(void)
 	ASSERT_EQ(token.type, VDF_TOK_ERR);
 }
 
+static void test_lexer_escaped_quote(void)
+{
+	VDFLexer lexer;
+	VDFToken token;
+
+	lexer.cursor = "\"a \\\"quoted\\\" word\"";
+	token = vdf_next_token(&lexer);
+	ASSERT_EQ(token.type, VDF_TOK_STRING);
+	ASSERT_EQ(token.len, strlen("a \\\"quoted\\\" word"));
+	ASSERT_EQ(strncmp(token.start, "a \\\"quoted\\\" word", token.len), 0);
+
+	token = vdf_next_token(&lexer);
+	ASSERT_EQ(token.type, VDF_TOK_EOF);
+}
+
 void test_lexer_suite(void)
 {
 	test_lexer_single_string();
@@ -103,4 +118,5 @@ void test_lexer_suite(void)
 	test_lexer_unterminated_string();
 	test_lexer_empty_input();
 	test_lexer_unknown_char();
+	test_lexer_escaped_quote();
 }

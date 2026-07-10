@@ -5,17 +5,27 @@
 #include "vdfc/token.h"
 
 #include <stdlib.h>
-#include <string.h>
 
 static char *vdf_strdup(const char *start, size_t len)
 {
-	char *s;
+	char  *s;
+	size_t i;
+	size_t j;
 
 	s = (char *) malloc(len + 1);
 	if (!s)
 		return (NULL);
-	memcpy(s, start, len);
-	s[len] = '\0';
+	i = 0;
+	j = 0;
+	while (i < len)
+	{
+		if (start[i] == '\\' && i + 1 < len && (start[i + 1] == '"' || start[i + 1] == '\\'))
+			i++;
+		s[j] = start[i];
+		i++;
+		j++;
+	}
+	s[j] = '\0';
 	return (s);
 }
 

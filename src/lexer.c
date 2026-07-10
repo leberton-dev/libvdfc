@@ -27,7 +27,11 @@ VDFToken vdf_next_token(VDFLexer *lexer)
 		size_t      len = 0;
 
 		while (start[len] != '"' && start[len] != '\0')
+		{
+			if (start[len] == '\\' && start[len + 1] != '\0')
+				len++;
 			len++;
+		}
 		if (start[len] == '\0')
 			return ((VDFToken) {VDF_TOK_ERR, NULL, 0});
 		lexer->cursor = start + len + 1;
