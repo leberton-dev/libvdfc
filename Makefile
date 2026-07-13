@@ -1,5 +1,5 @@
 NAME = libvdfc.a
-SRCS = src/vdf.c src/lexer.c src/parser.c
+SRCS = src/vdf.c src/lexer.c src/parser.c src/node.c
 OBJDIR = build
 OBJS = $(patsubst src/%.c,$(OBJDIR)/%.o,$(SRCS))
 

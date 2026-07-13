@@ -27,4 +27,19 @@ typedef struct s_VDFNode
 	size_t child_count;
 } VDFNode;
 
+/**
+ * Look up a direct child of `object` by key.
+ *
+ * `object` must be VDF_VAL_OBJECT. Returns NULL if `object` is not an
+ * object or if no child has that key.
+ */
+VDFNode *vdf_get(const VDFNode *object, const char *key);
+
+/**
+ * Look up a direct child of `object` by key and return its string value.
+ *
+ * If the child is not found or is not a string, returns `fallback`.
+ */
+const char *vdf_get_string(const VDFNode *object, const char *key, const char *fallback);
+
 #endif
