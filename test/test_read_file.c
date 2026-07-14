@@ -4,7 +4,7 @@
 #include "vdfc/errors.h"
 #include "vdfc/vdf.h"
 
-static void test_read_file(void)
+TEST(read_file)
 {
 	char   *out;
 	size_t  out_size;
@@ -19,7 +19,7 @@ static void test_read_file(void)
 	free(out);
 }
 
-static void test_read_file_missing(void)
+TEST(read_file_missing)
 {
 	char   *out;
 	size_t  out_size;
@@ -28,10 +28,4 @@ static void test_read_file_missing(void)
 	err = vdf_read_file("test/fixtures/does_not_exist.vdf", &out, &out_size);
 	ASSERT_EQ(err, VDF_ERR_OPEN);
 	ASSERT_EQ(out, NULL);
-}
-
-void test_read_file_suite(void)
-{
-	test_read_file();
-	test_read_file_missing();
 }
