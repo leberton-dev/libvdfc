@@ -42,4 +42,19 @@ VDFNode *vdf_get(const VDFNode *object, const char *key);
  */
 const char *vdf_get_string(const VDFNode *object, const char *key, const char *fallback);
 
+/**
+ * Look up a direct child of `object` by key and return its integer value.
+ *
+ * If the child is not found or is not an int, returns `fallback`.
+ */
+int vdf_get_int(const VDFNode *object, const char *key, int fallback);
+
+/**
+ * Look up a direct child of `object` by key and return its boolean value.
+ *
+ * Interpretes "0" as false and any other valid integer string as true.
+ * if the child is not found or is not a valid int, returns `fallback`.
+ */
+int vdf_get_bool(const VDFNode *object, const char *key, int fallback);
+
 #endif

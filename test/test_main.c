@@ -10,10 +10,9 @@ int main(void)
 	pid_t pid;
 	int   status;
 	int   deltas[2];
-
-	int test_run = 0;
-	int test_failed = 0;
-	int use_color = isatty(STDOUT_FILENO);
+	int   test_run = 0;
+	int   test_failed = 0;
+	int   use_color = isatty(STDOUT_FILENO);
 
 	for (TestNode *node = g_test_list_head; node != NULL; node = node->next)
 	{

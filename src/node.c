@@ -1,5 +1,6 @@
 #include "vdfc/node.h"
 
+#include <stdlib.h>
 #include <string.h>
 
 VDFNode *vdf_get(const VDFNode *object, const char *key)
@@ -26,4 +27,36 @@ const char *vdf_get_string(const VDFNode *object, const char *key, const char *f
 	if (!node || node->type != VDF_VAL_STRING)
 		return (fallback);
 	return (node->string);
+}
+
+static int node_int_value(const VDFNode *node, int *out)
+{
+	char *endptr;
+	long  value;
+
+	if (!node || node->type != VDF_VAL_STRING || node->string[0] == '\0')
+		return (0);
+	value = strtol(node->string, &endptr, 10);
+	if (*endptr != '\0')
+		return (0);
+	*out = (int) value;
+	return (1);
+}
+
+int vdf_get_int(const VDFNode *object, const char *key, int fallback)
+{
+	int value;
+
+	if (!node_int_value(vdf_get(object, key), &value))
+		return (fallback);
+	return (value);
+}
+
+int vdf_get_bool(const VDFNode *object, const char *key, int fallback)
+{
+	int value;
+
+	if (!node_int_value(vdf_get(object, key), &value))
+		return (fallback);
+	return (value != 0);
 }
