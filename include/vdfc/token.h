@@ -8,12 +8,13 @@
  */
 typedef enum e_VDFTokenType
 {
-	VDF_TOK_NONE = 0,    /* unused / uninitialized token */
-	VDF_TOK_ERR,         /* lexing error */
-	VDF_TOK_STRING,      /* a quoted string */
-	VDF_TOK_OPEN_BRACE,  /* '{' */
-	VDF_TOK_CLOSE_BRACE, /* '}' */
-	VDF_TOK_EOF          /* end of input */
+	VDF_TOK_NONE = 0,       /* unused / uninitialized token */
+	VDF_TOK_ERR,            /* lexing error */
+	VDF_TOK_STRING,         /* a quoted string */
+	VDF_TOK_OPEN_BRACE,     /* '{' */
+	VDF_TOK_CLOSE_BRACE,    /* '}' */
+	VDF_TOK_SINGLE_COMMENT, /* '// until eol' */
+	VDF_TOK_EOF             /* end of input */
 } VDFTokenType;
 
 /**

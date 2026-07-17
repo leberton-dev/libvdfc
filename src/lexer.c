@@ -1,4 +1,6 @@
 #include "vdfc/lexer.h"
+#include "vdfc/token.h"
+#include <stdio.h>
 
 static int is_whitespace(char c)
 {
@@ -36,6 +38,22 @@ VDFToken vdf_next_token(VDFLexer *lexer)
 			return ((VDFToken) {VDF_TOK_ERR, NULL, 0});
 		lexer->cursor = start + len + 1;
 		return ((VDFToken) {VDF_TOK_STRING, start, len});
+	}
+	// lex comments
+	if (*lexer->cursor == '/')
+	{
+		lexer->cursor++;
+		if (*lexer->cursor != '/')
+			return ((VDFToken) {VDF_TOK_ERR, NULL, 0});
+		const char *start = ++lexer->cursor;
+		size_t      len = 0;
+		while (start[len] != '\n' && start[len] != '\0' && start[len + 1] != '"')
+			len++;
+		if (start[len] == '\0')
+			lexer->cursor = start + len;
+		else
+			lexer->cursor = start + len + 1;
+		return ((VDFToken) {VDF_TOK_SINGLE_COMMENT, start, len});
 	}
 	return ((VDFToken) {VDF_TOK_ERR, NULL, 0});
 }

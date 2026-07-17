@@ -33,7 +33,7 @@ fclean: clean
 re: fclean all
 
 test: $(NAME) | $(OBJDIR)
-	$(CC) $(CFLAGS) $(INCLUDE) -I./test $(TEST_SRC) $(NAME) -o $(TEST_BIN)
+	$(CC) -fsanitize=address $(CFLAGS) $(INCLUDE) -I./test $(TEST_SRC) $(SRCS) -o $(TEST_BIN)
 	./$(TEST_BIN)
 
 .PHONY: all clean fclean re test
