@@ -134,3 +134,17 @@ Test(parser, unescapes_quotes)
 	cr_assert_str_eq(root->children[0]->string, "a \"quoted\" word");
 	vdf_free_node(root);
 }
+
+Test(parser, skips_comments)
+{
+	VDFNode *root = NULL;
+	VDFcode  err;
+
+	err = vdf_parse("\"key\" // comment \"value\"", &root);
+	cr_assert_eq(err, VDF_OK);
+	if (err != VDF_OK)
+		return;
+	cr_assert_eq(root->child_count, (size_t) 1);
+	cr_assert_str_eq(root->children[0]->string, "value");
+	vdf_free_node(root);
+}

@@ -4,6 +4,7 @@
 #include "vdfc/node.h"
 #include "vdfc/token.h"
 
+#include <stdio.h>
 #include <stdlib.h>
 
 static char *vdf_strdup(const char *start, size_t len)
@@ -77,6 +78,18 @@ static VDFcode append_child(VDFNode *node, VDFNode *child)
 	return (VDF_OK);
 }
 
+static VDFToken next_significant_token(VDFLexer *lexer)
+{
+	VDFToken tok;
+
+	tok = vdf_next_token(lexer);
+	while (tok.type == VDF_TOK_SINGLE_COMMENT)
+	{
+		tok = vdf_next_token(lexer);
+	}
+	return (tok);
+}
+
 static VDFcode parse_object(VDFLexer *lexer, VDFNode *node, int is_root)
 {
 	VDFToken key_tok;
@@ -88,7 +101,7 @@ static VDFcode parse_object(VDFLexer *lexer, VDFNode *node, int is_root)
 	node->child_count = 0;
 	while (1)
 	{
-		key_tok = vdf_next_token(lexer);
+		key_tok = next_significant_token(lexer);
 		if (key_tok.type == VDF_TOK_EOF)
 			return (is_root ? VDF_OK : VDF_ERR_PARSE);
 		if (key_tok.type == VDF_TOK_CLOSE_BRACE)
@@ -96,7 +109,7 @@ static VDFcode parse_object(VDFLexer *lexer, VDFNode *node, int is_root)
 		if (key_tok.type != VDF_TOK_STRING)
 			return (VDF_ERR_PARSE);
 
-		value_tok = vdf_next_token(lexer);
+		value_tok = next_significant_token(lexer);
 		child = malloc(sizeof(VDFNode));
 		if (!child)
 			return (VDF_ERR_MALLOC);
