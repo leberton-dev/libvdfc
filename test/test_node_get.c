@@ -1,10 +1,10 @@
-#include "test_utils.h"
+#include <criterion/criterion.h>
 
 #include "vdfc/errors.h"
 #include "vdfc/node.h"
 #include "vdfc/parser.h"
 
-TEST(node_get_str)
+Test(get_string, valid)
 {
 	VDFNode *out;
 	VDFcode  err;
@@ -14,13 +14,16 @@ TEST(node_get_str)
 		return;
 	VDFNode *appstate = vdf_get(out, "AppState");
 	if (!appstate)
+	{
+		vdf_free_node(out);
 		return;
+	}
 	const char *str = vdf_get_string(appstate, "name", "unknown");
-	ASSERT_STREQ(str, "division 2");
+	cr_assert_str_eq(str, "division 2");
 	vdf_free_node(out);
 }
 
-TEST(node_get_int_valid)
+Test(get_int, valid)
 {
 	VDFNode *out;
 	VDFcode  err;
@@ -30,13 +33,16 @@ TEST(node_get_int_valid)
 		return;
 	VDFNode *appstate = vdf_get(out, "AppState");
 	if (!appstate)
+	{
+		vdf_free_node(out);
 		return;
+	}
 	int i = vdf_get_int(appstate, "appid", -1);
-	ASSERT_EQ(i, 10);
+	cr_assert_eq(i, 10);
 	vdf_free_node(out);
 }
 
-TEST(node_get_int_invalid)
+Test(get_int, invalid)
 {
 	VDFNode *out;
 	VDFcode  err;
@@ -46,13 +52,16 @@ TEST(node_get_int_invalid)
 		return;
 	VDFNode *appstate = vdf_get(out, "AppState");
 	if (!appstate)
+	{
+		vdf_free_node(out);
 		return;
+	}
 	int i = vdf_get_int(appstate, "appid", -1);
-	ASSERT_EQ(i, -1);
+	cr_assert_eq(i, -1);
 	vdf_free_node(out);
 }
 
-TEST(node_get_bool_valid_true)
+Test(get_bool, valid_true)
 {
 	VDFNode *out;
 	VDFcode  err;
@@ -62,13 +71,16 @@ TEST(node_get_bool_valid_true)
 		return;
 	VDFNode *appstate = vdf_get(out, "appstate");
 	if (!appstate)
+	{
+		vdf_free_node(out);
 		return;
+	}
 	int i = vdf_get_bool(appstate, "activated", -1);
-	ASSERT_EQ(i, 1);
+	cr_assert_eq(i, 1);
 	vdf_free_node(out);
 }
 
-TEST(node_get_bool_valid_false)
+Test(get_bool, valid_false)
 {
 	VDFNode *out;
 	VDFcode  err;
@@ -78,13 +90,16 @@ TEST(node_get_bool_valid_false)
 		return;
 	VDFNode *appstate = vdf_get(out, "appstate");
 	if (!appstate)
+	{
+		vdf_free_node(out);
 		return;
+	}
 	int i = vdf_get_bool(appstate, "activated", -1);
-	ASSERT_EQ(i, 0);
+	cr_assert_eq(i, 0);
 	vdf_free_node(out);
 }
 
-TEST(node_get_bool_invalid)
+Test(get_bool, invalid)
 {
 	VDFNode *out;
 	VDFcode  err;
@@ -94,13 +109,16 @@ TEST(node_get_bool_invalid)
 		return;
 	VDFNode *appstate = vdf_get(out, "appstate");
 	if (!appstate)
+	{
+		vdf_free_node(out);
 		return;
+	}
 	int i = vdf_get_bool(appstate, "activated", -1);
-	ASSERT_EQ(i, -1);
+	cr_assert_eq(i, -1);
 	vdf_free_node(out);
 }
 
-TEST(node_get_bool_valid_fallback_same_as_val)
+Test(get_bool, normalizes_nonzero_to_one)
 {
 	VDFNode *out;
 	VDFcode  err;
@@ -110,8 +128,11 @@ TEST(node_get_bool_valid_fallback_same_as_val)
 		return;
 	VDFNode *appstate = vdf_get(out, "appstate");
 	if (!appstate)
+	{
+		vdf_free_node(out);
 		return;
+	}
 	int i = vdf_get_bool(appstate, "activated", 5);
-	ASSERT_EQ(i, 1);
+	cr_assert_eq(i, 1);
 	vdf_free_node(out);
 }

@@ -1,31 +1,33 @@
 #include <stdlib.h>
+#include <string.h>
 
-#include "test_utils.h"
+#include <criterion/criterion.h>
+
 #include "vdfc/errors.h"
 #include "vdfc/vdf.h"
 
-TEST(read_file)
+Test(read_file, existing_file)
 {
 	char   *out;
 	size_t  out_size;
 	VDFcode err;
 
 	err = vdf_read_file("test/fixtures/libraryfolders.vdf", &out, &out_size);
-	ASSERT_EQ(err, VDF_OK);
+	cr_assert_eq(err, VDF_OK);
 	if (err != VDF_OK)
 		return;
-	ASSERT_EQ(out_size, (size_t) 309);
-	ASSERT_EQ(strncmp(out, "\"libraryfolders\"", strlen("\"libraryfolders\"")), 0);
+	cr_assert_eq(out_size, (size_t) 309);
+	cr_assert_arr_eq(out, "\"libraryfolders\"", strlen("\"libraryfolders\""));
 	free(out);
 }
 
-TEST(read_file_missing)
+Test(read_file, missing_file)
 {
 	char   *out;
 	size_t  out_size;
 	VDFcode err;
 
 	err = vdf_read_file("test/fixtures/does_not_exist.vdf", &out, &out_size);
-	ASSERT_EQ(err, VDF_ERR_OPEN);
-	ASSERT_EQ(out, NULL);
+	cr_assert_eq(err, VDF_ERR_OPEN);
+	cr_assert_null(out);
 }

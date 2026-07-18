@@ -10,8 +10,9 @@ AR = ar rcs
 RM = rm -rf
 HEADER = include/vdfc/vdf.h include/vdfc/errors.h include/vdfc/token.h include/vdfc/lexer.h include/vdfc/node.h include/vdfc/parser.h
 
-TEST_SRC = test/test_main.c test/test_read_file.c test/test_lexer.c test/test_utils.c test/test_parser.c test/test_node_get.c test/test_fixtures.c
+TEST_SRC = test/test_lexer.c test/test_read_file.c test/test_parser.c test/test_node_get.c test/test_fixtures.c
 TEST_BIN = $(OBJDIR)/test_runner
+CRITERION_FLAGS = $(shell pkg-config --cflags --libs criterion)
 
 all: $(NAME)
 
@@ -33,7 +34,7 @@ fclean: clean
 re: fclean all
 
 test: $(NAME) | $(OBJDIR)
-	$(CC) -fsanitize=address $(CFLAGS) $(INCLUDE) -I./test $(TEST_SRC) $(SRCS) -o $(TEST_BIN)
-	./$(TEST_BIN)
+	@$(CC) -fsanitize=address $(CRITERION_FLAGS) $(CFLAGS) $(INCLUDE) -I./test $(TEST_SRC) $(SRCS) -o $(TEST_BIN)
+	@ASAN_OPTIONS=abort_on_error=1 ./$(TEST_BIN)
 
 .PHONY: all clean fclean re test
