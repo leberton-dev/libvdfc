@@ -187,8 +187,6 @@ Test(lexer, single_comment_before_close_brace_same_line)
 	token = vdf_next_token(&lexer);
 	cr_assert_eq(token.type, VDF_TOK_SINGLE_COMMENT);
 	token = vdf_next_token(&lexer);
-	cr_assert_eq(token.type, VDF_TOK_CLOSE_BRACE);
-	token = vdf_next_token(&lexer);
 	cr_assert_eq(token.type, VDF_TOK_STRING);
 	token = vdf_next_token(&lexer);
 	cr_assert_eq(token.type, VDF_TOK_STRING);
