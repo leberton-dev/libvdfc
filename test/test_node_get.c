@@ -17,6 +17,7 @@ TEST(node_get_str)
 		return;
 	const char *str = vdf_get_string(appstate, "name", "unknown");
 	ASSERT_STREQ(str, "division 2");
+	vdf_free_node(out);
 }
 
 TEST(node_get_int_valid)
@@ -32,6 +33,7 @@ TEST(node_get_int_valid)
 		return;
 	int i = vdf_get_int(appstate, "appid", -1);
 	ASSERT_EQ(i, 10);
+	vdf_free_node(out);
 }
 
 TEST(node_get_int_invalid)
@@ -47,6 +49,7 @@ TEST(node_get_int_invalid)
 		return;
 	int i = vdf_get_int(appstate, "appid", -1);
 	ASSERT_EQ(i, -1);
+	vdf_free_node(out);
 }
 
 TEST(node_get_bool_valid_true)
@@ -62,6 +65,7 @@ TEST(node_get_bool_valid_true)
 		return;
 	int i = vdf_get_bool(appstate, "activated", -1);
 	ASSERT_EQ(i, 1);
+	vdf_free_node(out);
 }
 
 TEST(node_get_bool_valid_false)
@@ -77,6 +81,7 @@ TEST(node_get_bool_valid_false)
 		return;
 	int i = vdf_get_bool(appstate, "activated", -1);
 	ASSERT_EQ(i, 0);
+	vdf_free_node(out);
 }
 
 TEST(node_get_bool_invalid)
@@ -92,6 +97,7 @@ TEST(node_get_bool_invalid)
 		return;
 	int i = vdf_get_bool(appstate, "activated", -1);
 	ASSERT_EQ(i, -1);
+	vdf_free_node(out);
 }
 
 TEST(node_get_bool_valid_fallback_same_as_val)
@@ -107,4 +113,5 @@ TEST(node_get_bool_valid_fallback_same_as_val)
 		return;
 	int i = vdf_get_bool(appstate, "activated", 5);
 	ASSERT_EQ(i, 1);
+	vdf_free_node(out);
 }

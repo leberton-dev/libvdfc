@@ -1,3 +1,4 @@
+#include <sanitizer/lsan_interface.h>
 #include <stdio.h>
 #include <sys/wait.h>
 #include <unistd.h>
@@ -33,6 +34,7 @@ int main(void)
 			fflush(stdout);
 			write(fd[1], deltas, sizeof(deltas));
 			close(fd[1]);
+			__lsan_do_recoverable_leak_check();
 			_exit(0);
 		}
 		close(fd[1]);
