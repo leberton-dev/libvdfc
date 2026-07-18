@@ -16,7 +16,7 @@ Test(read_file, existing_file)
 	cr_assert_eq(err, VDF_OK);
 	if (err != VDF_OK)
 		return;
-	cr_assert_eq(out_size, (size_t) 309);
+	cr_assert_eq(out_size, (size_t) 330);
 	cr_assert_arr_eq(out, "\"libraryfolders\"", strlen("\"libraryfolders\""));
 	free(out);
 }
