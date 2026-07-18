@@ -2,6 +2,7 @@
 #include "vdfc/token.h"
 
 #include <criterion/criterion.h>
+#include <criterion/internal/assert.h>
 
 Test(lexer, quoted_string)
 {
@@ -170,5 +171,89 @@ Test(lexer, single_comment_ends_at_newline)
 	token = vdf_next_token(&lexer); // "}"
 	cr_assert_eq(token.type, VDF_TOK_CLOSE_BRACE);
 	token = vdf_next_token(&lexer); // '\0'
+	cr_assert_eq(token.type, VDF_TOK_EOF);
+}
+
+Test(lexer, single_comment_before_close_brace_same_line)
+{
+	VDFLexer lexer;
+	VDFToken token;
+
+	lexer.cursor = "\"k\" \"v\" // comment }\n\"next\" \"x\"";
+	token = vdf_next_token(&lexer);
+	cr_assert_eq(token.type, VDF_TOK_STRING);
+	token = vdf_next_token(&lexer);
+	cr_assert_eq(token.type, VDF_TOK_STRING);
+	token = vdf_next_token(&lexer);
+	cr_assert_eq(token.type, VDF_TOK_SINGLE_COMMENT);
+	token = vdf_next_token(&lexer);
+	cr_assert_eq(token.type, VDF_TOK_CLOSE_BRACE);
+	token = vdf_next_token(&lexer);
+	cr_assert_eq(token.type, VDF_TOK_STRING);
+	token = vdf_next_token(&lexer);
+	cr_assert_eq(token.type, VDF_TOK_STRING);
+}
+
+Test(lexer, malformed_comment_single_slash)
+{
+	VDFLexer lexer;
+	VDFToken token;
+
+	lexer.cursor = "/x";
+	token = vdf_next_token(&lexer);
+	cr_assert_eq(token.type, VDF_TOK_ERR);
+}
+
+Test(lexer, empty_quoted_string)
+{
+	VDFLexer lexer;
+	VDFToken token;
+
+	lexer.cursor = "\"\"";
+	token = vdf_next_token(&lexer);
+	cr_assert_eq(token.type, VDF_TOK_STRING);
+	cr_assert_eq(token.len, 0);
+	cr_assert_arr_eq(token.start, "", 0);
+}
+
+Test(lexer, braces_inside_quoted_string)
+{
+	VDFLexer lexer;
+	VDFToken token;
+
+	lexer.cursor = "\"{not a brace}\"";
+	token = vdf_next_token(&lexer);
+	cr_assert_eq(token.type, VDF_TOK_STRING);
+	cr_assert_eq(token.len, strlen("{not a brace}"));
+	cr_assert_arr_eq(token.start, "{not a brace}", token.len);
+}
+
+Test(lexer, escaped_backslash)
+{
+	VDFLexer lexer;
+	VDFToken token;
+
+	lexer.cursor = "\"a\\\\b\"";
+	token = vdf_next_token(&lexer);
+	cr_assert_eq(token.type, VDF_TOK_STRING);
+	cr_assert_eq(token.len, strlen("a\\\\b"));
+	cr_assert_arr_eq(token.start, "a\\\\b", token.len);
+}
+
+Test(lexer, tab_and_cr_whitespace)
+{
+	VDFLexer lexer;
+	VDFToken token;
+
+	lexer.cursor = "\t\"key\"\r\n\t\"value\"\r\n";
+	token = vdf_next_token(&lexer);
+	cr_assert_eq(token.type, VDF_TOK_STRING);
+	cr_assert_eq(token.len, strlen("key"));
+	cr_assert_arr_eq(token.start, "key", token.len);
+	token = vdf_next_token(&lexer);
+	cr_assert_eq(token.type, VDF_TOK_STRING);
+	cr_assert_eq(token.len, strlen("value"));
+	cr_assert_arr_eq(token.start, "value", token.len);
+	token = vdf_next_token(&lexer);
 	cr_assert_eq(token.type, VDF_TOK_EOF);
 }
