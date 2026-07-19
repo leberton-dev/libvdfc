@@ -83,7 +83,7 @@ static VDFToken next_significant_token(VDFLexer *lexer)
 	VDFToken tok;
 
 	tok = vdf_next_token(lexer);
-	while (tok.type == VDF_TOK_SINGLE_COMMENT)
+	while (tok.type == VDF_TOK_SINGLE_COMMENT || tok.type == VDF_TOK_MULTI_COMMENT)
 	{
 		tok = vdf_next_token(lexer);
 	}

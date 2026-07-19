@@ -14,6 +14,7 @@ typedef enum e_VDFTokenType
 	VDF_TOK_OPEN_BRACE,     /* '{' */
 	VDF_TOK_CLOSE_BRACE,    /* '}' */
 	VDF_TOK_SINGLE_COMMENT, /* '// until eol' */
+	VDF_TOK_MULTI_COMMENT,  /* '/\* until *\/' */
 	VDF_TOK_EOF             /* end of input */
 } VDFTokenType;
 

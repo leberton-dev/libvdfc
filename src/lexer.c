@@ -26,9 +26,6 @@ static VDFToken lex_quoted_string(VDFLexer *lexer)
 
 static VDFToken lex_single_comment(VDFLexer *lexer)
 {
-	lexer->cursor++;
-	if (*lexer->cursor != '/')
-		return ((VDFToken) {VDF_TOK_ERR, NULL, 0});
 	const char *start = ++lexer->cursor;
 	size_t      len = 0;
 
@@ -39,6 +36,30 @@ static VDFToken lex_single_comment(VDFLexer *lexer)
 	else
 		lexer->cursor = start + len + 1;
 	return ((VDFToken) {VDF_TOK_SINGLE_COMMENT, start, len});
+}
+
+static VDFToken lex_multi_comment(VDFLexer *lexer)
+{
+	const char *start = ++lexer->cursor;
+	size_t      len = 0;
+
+	while (start[len] != '\0' && !(start[len] == '*' && start[len + 1] == '/'))
+		len++;
+	if (start[len] == '\0')
+		return ((VDFToken) {VDF_TOK_ERR, NULL, 0});
+	lexer->cursor = start + len + 2;
+	return ((VDFToken) {VDF_TOK_MULTI_COMMENT, start, len});
+}
+
+static VDFToken lex_comment(VDFLexer *lexer)
+{
+	lexer->cursor++;
+	if (*lexer->cursor == '/')
+		return (lex_single_comment(lexer));
+	else if (*lexer->cursor == '*')
+		return (lex_multi_comment(lexer));
+	else
+		return ((VDFToken) {VDF_TOK_ERR, NULL, 0});
 }
 
 VDFToken vdf_next_token(VDFLexer *lexer)
@@ -60,6 +81,6 @@ VDFToken vdf_next_token(VDFLexer *lexer)
 	if (*lexer->cursor == '"')
 		return (lex_quoted_string(lexer));
 	if (*lexer->cursor == '/')
-		return (lex_single_comment(lexer));
+		return (lex_comment(lexer));
 	return ((VDFToken) {VDF_TOK_ERR, NULL, 0});
 }

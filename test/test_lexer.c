@@ -192,6 +192,20 @@ Test(lexer, single_comment_before_close_brace_same_line)
 	cr_assert_eq(token.type, VDF_TOK_STRING);
 }
 
+Test(lexer, multi_comment)
+{
+	VDFLexer lexer;
+	VDFToken token;
+
+	lexer.cursor = "/* This is a\nmulti-line comment */";
+	token = vdf_next_token(&lexer);
+	cr_assert_eq(token.type, VDF_TOK_MULTI_COMMENT);
+	cr_assert_eq(token.len, strlen(" This is a\nmulti-line comment "));
+	cr_assert_arr_eq(token.start, " This is a\nmulti-line comment ", token.len);
+	token = vdf_next_token(&lexer);
+	cr_assert_eq(token.type, VDF_TOK_EOF);
+}
+
 Test(lexer, malformed_comment_single_slash)
 {
 	VDFLexer lexer;
