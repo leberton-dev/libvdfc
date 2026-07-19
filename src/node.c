@@ -1,5 +1,7 @@
 #include "vdfc/node.h"
+#include "vdfc/errors.h"
 
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -59,4 +61,85 @@ int vdf_get_bool(const VDFNode *object, const char *key, int fallback)
 	if (!node_int_value(vdf_get(object, key), &value))
 		return (fallback);
 	return (value != 0);
+}
+
+static VDFcode append_text_to_buffer(char **buf, size_t *len, const char *text)
+{
+	size_t text_len = strlen(text);
+	size_t new_len = *len + text_len + 1;
+	char  *tmp;
+
+	tmp = (char *) realloc(*buf, new_len);
+	if (!tmp)
+		return (VDF_ERR_MALLOC);
+	tmp[*len] = '\0';
+	strlcat(tmp, text, new_len);
+	*len += text_len;
+	*buf = tmp;
+	return (VDF_OK);
+}
+
+static VDFcode dump_node_recursive(VDFNode *node, char **buf, size_t *len, int depth)
+{
+	char   *key;
+	char   *value;
+	char   *str;
+	size_t  size;
+	VDFcode err;
+
+	key = node->key ? node->key : "(null)";
+	value = node->type == VDF_VAL_STRING ? "string" : "object";
+	size = strlen(key) + strlen(value) + 4;
+	str = (char *) malloc(size);
+	if (!str)
+		return (VDF_ERR_MALLOC);
+	for (int i = 0; i < depth; i++)
+	{
+		err = append_text_to_buffer(buf, len, "  ");
+		if (err != VDF_OK)
+		{
+			free(str);
+			return (err);
+		}
+	}
+	strlcpy(str, key, size);
+	strlcat(str, ": ", size);
+	strlcat(str, value, size);
+	strlcat(str, "\n", size);
+	err = append_text_to_buffer(buf, len, str);
+	if (err != VDF_OK)
+	{
+		free(str);
+		return (err);
+	}
+	if (node->type == VDF_VAL_OBJECT)
+	{
+		for (size_t i = 0; i < node->child_count; i++)
+		{
+			err = dump_node_recursive(node->children[i], buf, len, depth + 1);
+			if (err != VDF_OK)
+			{
+				free(str);
+				return (err);
+			}
+		}
+	}
+	free(str);
+	return (VDF_OK);
+}
+
+VDFcode vdf_dump_node(VDFNode *root, char **dump)
+{
+	char   *buf = NULL;
+	size_t  size = 0;
+	VDFcode err;
+	err = dump_node_recursive(root, &buf, &size, 0);
+	if (err != VDF_OK)
+	{
+		if (buf)
+			free(buf);
+		return err;
+	}
+	*dump = buf;
+	return (VDF_OK);
 }

@@ -3,6 +3,8 @@
 
 #include <stddef.h>
 
+#include "vdfc/errors.h"
+
 /**
  * 'String' or 'Object' value held by a VDFNode.
  */
@@ -56,5 +58,10 @@ int vdf_get_int(const VDFNode *object, const char *key, int fallback);
  * if the child is not found or is not a valid int, returns `fallback`.
  */
 int vdf_get_bool(const VDFNode *object, const char *key, int fallback);
+
+/**
+ * Allocates `dump` and fills with the structure of `root`.
+ */
+VDFcode vdf_dump_node(VDFNode *root, char **dump);
 
 #endif
