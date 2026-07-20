@@ -4,7 +4,6 @@
 #include <stdlib.h>
 
 #include "errors.h"
-#include "lexer.h"
 #include "parser.h"
 #include "token.h"
 
