@@ -10,7 +10,13 @@ AR = ar rcs
 RM = rm -rf
 HEADER = include/vdfc/vdf.h include/vdfc/errors.h include/vdfc/token.h include/vdfc/lexer.h include/vdfc/node.h include/vdfc/parser.h
 
-TEST_SRC = test/test_lexer.c test/test_read_file.c test/test_parser.c test/test_node_get.c test/test_fixtures.c
+TEST_SRC = test/test_lexer.c test/test_read_file.c test/test_parser.c test/test_fixtures.c \
+		   test/node/test_get_bool.c \
+		   test/node/test_get_bool_recursive.c \
+		   test/node/test_get_int.c \
+		   test/node/test_get_int_recursive.c \
+		   test/node/test_get_string.c \
+		   test/node/test_get_string_recursive.c
 TEST_BIN = $(OBJDIR)/test_runner
 CRITERION_FLAGS = $(shell pkg-config --cflags --libs criterion)
 
