@@ -37,4 +37,12 @@ test: $(NAME) | $(OBJDIR)
 	@$(CC) -fsanitize=address $(CRITERION_FLAGS) $(CFLAGS) $(INCLUDE) -I./test $(TEST_SRC) $(SRCS) -o $(TEST_BIN)
 	@ASAN_OPTIONS=abort_on_error=1 ./$(TEST_BIN)
 
+install: $(NAME)
+	source scripts/install.sh && _install
+
+uninstall:
+	source scripts/install.sh && _pop_install
+
+
+
 .PHONY: all clean fclean re test
