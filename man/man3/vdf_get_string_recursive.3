@@ -1,0 +1,33 @@
+.TH vdf_get_string_recursive 3
+
+.SH NAME
+vdf_get_string_recursive
+
+.SH LIBRARY
+Valve Data Format Parser Library (libvdfc)
+
+.SH SYNOPSIS
+#include <vdfc/vdf.h>
+
+const char *vdf_get_string_recursive(const VDFNode *object, const char *key, const char *fallback);
+
+.SH DESCRIPTION
+Look up a `key` anywhere in the subtree at `object`, depth-first, and return its string value.
+
+If no matching string node is found anywhere in the subtree, return `fallback`.
+
+.SH RETURN VALUE
+Returns the child's string value, or `fallback`.
+
+.SH ERRORS
+None.
+
+.SH SEE ALSO
+.BR vdf_read_file (3),
+.BR vdf_parse (3),
+.BR vdf_get (3),
+.BR vdf_get_int (3),
+.BR vdf_get_bool (3),
+.BR vdf_dump_node (3),
+.BR vdf_free_node (3),
+.BR libvdfc_errors (3)

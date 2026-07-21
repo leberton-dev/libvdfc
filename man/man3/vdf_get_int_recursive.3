@@ -1,0 +1,34 @@
+.TH vdf_get_int_recursive 3
+
+.SH NAME
+vdf_get_int_recursive
+
+.SH LIBRARY
+Valve Data Format Parser Library (libvdfc)
+
+.SH SYNOPSIS
+#include <vdfc/vdf.h>
+
+int vdf_get_int_recursive(const VDFNode *object, const char *key, int fallback);
+
+.SH DESCRIPTION
+Look up `key` anywhere in the subtree rooted at `object`, depth-first, and return its integer value.
+
+If no matching integer node is found anywhere in the subtree, returns `fallback`.
+
+.SH RETURN VALUE
+Returns the matching node's integer value, or `fallback`.
+
+.SH ERRORS
+None.
+
+.SH SEE ALSO
+.BR vdf_read_file (3),
+.BR vdf_parse (3),
+.BR vdf_get (3),
+.BR vdf_get_int (3),
+.BR vdf_get_bool_recursive (3),
+.BR vdf_get_string_recursive (3),
+.BR vdf_dump_node (3),
+.BR vdf_free_node (3),
+.BR libvdfc_errors (3)

@@ -1,0 +1,35 @@
+.TH vdf_get_long 3
+
+.SH NAME
+vdf_get_long
+
+.SH LIBRARY
+Valve Data Format Parser Library (libvdfc)
+
+.SH SYNOPSIS
+#include <vdfc/vdf.h>
+
+long vdf_get_long(const VDFNode *object, const char *key, long fallback);
+
+.SH DESCRIPTION
+Look up a direct child of `object` by key and return its `long` value.
+
+If the child is not found or is not a valid integer string, returns `fallback`.
+
+.SH RETURN VALUE
+Returns the child's `long` value, or `fallback`.
+
+.SH ERRORS
+None.
+
+.SH SEE ALSO
+.BR vdf_read_file (3),
+.BR vdf_parse (3),
+.BR vdf_get (3),
+.BR vdf_get_int (3),
+.BR vdf_get_long_recursive (3),
+.BR vdf_get_long_long (3),
+.BR vdf_get_ull (3),
+.BR vdf_dump_node (3),
+.BR vdf_free_node (3),
+.BR libvdfc_errors (3)
