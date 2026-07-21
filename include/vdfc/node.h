@@ -61,12 +61,30 @@ const char *vdf_get_string_recursive(const VDFNode *object, const char *key, con
 int vdf_get_int(const VDFNode *object, const char *key, int fallback);
 
 /**
+ * Look up `key` anywhere in the subtree rooted at `object`, depth-first,
+ * and return its integer value.
+ *
+ * If no matching int node is found anywhere in the subtree, returns `fallback`.
+ */
+int vdf_get_int_recursive(const VDFNode *object, const char *key, int fallback);
+
+/**
  * Look up a direct child of `object` by key and return its boolean value.
  *
  * Interpretes "0" as false and any other valid integer string as true.
  * if the child is not found or is not a valid int, returns `fallback`.
  */
 int vdf_get_bool(const VDFNode *object, const char *key, int fallback);
+
+/**
+ * Look up `key` anywhere in the subtree rooted at `object`, depth-first,
+ * and return its boolean value.
+ *
+ * Interpretes "0" as false and any other valid integer string as true.
+ * If no matching valid-int node is found anywhere in the subtree, returns
+ * `fallback`.
+ */
+int vdf_get_bool_recursive(const VDFNode *object, const char *key, int fallback);
 
 /**
  * Allocates `dump` and fills with the structure of `root`.

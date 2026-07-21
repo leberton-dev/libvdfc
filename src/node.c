@@ -22,6 +22,24 @@ VDFNode *vdf_get(const VDFNode *object, const char *key)
 	return (NULL);
 }
 
+VDFNode *vdf_get_recursive(const VDFNode *object, const char *key)
+{
+	VDFNode *node;
+
+	if (!object || object->type != VDF_VAL_OBJECT)
+		return (NULL);
+	node = vdf_get(object, key);
+	if (node)
+		return (node);
+	for (size_t i = 0; i < object->child_count; i++)
+	{
+		node = vdf_get_recursive(object->children[i], key);
+		if (node)
+			return (node);
+	}
+	return (NULL);
+}
+
 const char *vdf_get_string(const VDFNode *object, const char *key, const char *fallback)
 {
 	VDFNode *node;
@@ -34,27 +52,12 @@ const char *vdf_get_string(const VDFNode *object, const char *key, const char *f
 
 const char *vdf_get_string_recursive(const VDFNode *object, const char *key, const char *fallback)
 {
-	const char *found;
-	VDFNode    *node;
+	VDFNode *node;
 
-	if (!object || object->type != VDF_VAL_OBJECT)
-	{
+	node = vdf_get_recursive(object, key);
+	if (!node || node->type != VDF_VAL_STRING)
 		return (fallback);
-	}
-
-	node = vdf_get(object, key);
-	if (node && node->type == VDF_VAL_STRING)
-	{
-		return (node->string);
-	}
-	else
-	{
-		for (size_t i = 0; i < object->child_count; i++)
-		{
-			found = vdf_get_string_recursive(object->children[i], key, fallback);
-		}
-	}
-	return (found);
+	return (node->string);
 }
 
 static int node_int_value(const VDFNode *node, int *out)
@@ -80,11 +83,29 @@ int vdf_get_int(const VDFNode *object, const char *key, int fallback)
 	return (value);
 }
 
+int vdf_get_int_recursive(const VDFNode *object, const char *key, int fallback)
+{
+	int value;
+
+	if (!node_int_value(vdf_get_recursive(object, key), &value))
+		return (fallback);
+	return (value);
+}
+
 int vdf_get_bool(const VDFNode *object, const char *key, int fallback)
 {
 	int value;
 
 	if (!node_int_value(vdf_get(object, key), &value))
+		return (fallback);
+	return (value != 0);
+}
+
+int vdf_get_bool_recursive(const VDFNode *object, const char *key, int fallback)
+{
+	int value;
+
+	if (!node_int_value(vdf_get_recursive(object, key), &value))
 		return (fallback);
 	return (value != 0);
 }
