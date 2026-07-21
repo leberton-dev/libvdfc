@@ -45,6 +45,15 @@ VDFNode *vdf_get(const VDFNode *object, const char *key);
 const char *vdf_get_string(const VDFNode *object, const char *key, const char *fallback);
 
 /**
+ * Look up `key` anywhere in the subtree rooted at `object`, depth-first,
+ * and return its string value.
+ *
+ * If no matching string node is found anywhere in the subtree, returns
+ * `fallback`.
+ */
+const char *vdf_get_string_recursive(const VDFNode *object, const char *key, const char *fallback);
+
+/**
  * Look up a direct child of `object` by key and return its integer value.
  *
  * If the child is not found or is not an int, returns `fallback`.

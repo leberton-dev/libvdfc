@@ -1,6 +1,7 @@
 #include "vdfc/node.h"
 #include "vdfc/errors.h"
 
+#include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -29,6 +30,31 @@ const char *vdf_get_string(const VDFNode *object, const char *key, const char *f
 	if (!node || node->type != VDF_VAL_STRING)
 		return (fallback);
 	return (node->string);
+}
+
+const char *vdf_get_string_recursive(const VDFNode *object, const char *key, const char *fallback)
+{
+	const char *found;
+	VDFNode    *node;
+
+	if (!object || object->type != VDF_VAL_OBJECT)
+	{
+		return (fallback);
+	}
+
+	node = vdf_get(object, key);
+	if (node && node->type == VDF_VAL_STRING)
+	{
+		return (node->string);
+	}
+	else
+	{
+		for (size_t i = 0; i < object->child_count; i++)
+		{
+			found = vdf_get_string_recursive(object->children[i], key, fallback);
+		}
+	}
+	return (found);
 }
 
 static int node_int_value(const VDFNode *node, int *out)
