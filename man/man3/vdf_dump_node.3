@@ -1,0 +1,32 @@
+.TH vdf_dump_node 3
+
+.SH NAME
+vdf_dump_node
+
+.SH LIBRARY
+Valve Data Format Parser Library (libvdfc)
+
+.SH SYNOPSIS
+#include <vdfc/vdf.h>
+
+VDFcode vdf_dump_node(VDFNode *root, char **dump);
+
+.SH DESCRIPTION
+Allocates a buffer and dumps the node tree into it with the structure of the `root` node.
+
+.SH RETURN VALUE
+Upon a successful read, returns \fB`VDF_OK`\fR.
+Otherwise, returns an error code.
+
+.SH ERRORS
+\fB`VDF_ERR_MALLOC`\fR: Memory allocation failure.
+
+.SH SEE ALSO
+.BR vdf_read_file (3),
+.BR vdf_parse (3),
+.BR vdf_get (3),
+.BR vdf_get_string (3),
+.BR vdf_get_int (3),
+.BR vdf_get_bool (3),
+.BR vdf_free_node (3),
+.BR libvdfc_errors (3)

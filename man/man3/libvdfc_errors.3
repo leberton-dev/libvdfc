@@ -1,0 +1,45 @@
+.TH libvdfc_errors 3
+
+.SH NAME
+libvdfc_errors \- status codes returned by libvdfc functions
+
+.SH LIBRARY
+Valve Data Format Parser Library (libvdfc)
+
+.SH SYNOPSIS
+#include <vdfc/vdf.h>
+
+typedef enum e_VDFcode
+{
+ VDF_OK = 0,
+ VDF_ERR_OPEN,
+ VDF_ERR_IO,
+ VDF_ERR_MALLOC,
+ VDF_ERR_PARSE
+} VDFcode;
+
+.SH DESCRIPTION
+\fB`VDFcode`\fR is the status code type returned by every libvdfc function
+that can fail.
+
+.SH VALUES
+.PP
+\fB`VDF_OK`\fR: Success.
+.PP
+\fB`VDF_ERR_OPEN`\fR: Failed to open the input file.
+.PP
+\fB`VDF_ERR_IO`\fR: Read/seek error while accessing the file.
+.PP
+\fB`VDF_ERR_MALLOC`\fR: Memory allocation failure.
+.PP
+\fB`VDF_ERR_PARSE`\fR: Malformed VDF content.
+
+.SH SEE ALSO
+.BR vdf_read_file (3),
+.BR vdf_parse (3),
+.BR vdf_get (3),
+.BR vdf_get_string (3),
+.BR vdf_get_int (3),
+.BR vdf_get_bool (3),
+.BR vdf_dump_node (3),
+.BR vdf_free_node (3)

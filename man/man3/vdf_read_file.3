@@ -1,0 +1,41 @@
+.TH vdf_read_file 3
+
+.SH NAME
+vdf_read_file
+
+.SH LIBRARY
+Valve Data Format Parser Library (libvdfc)
+
+.SH SYNOPSIS
+#include <vdfc/vdf.h>
+
+VDFcode vdf_read_file(const char *filename, char **buffer, size_t *size);
+
+.SH DESCRIPTION
+Read a file into a newly allocated null-terminated buffer.
+
+Caller must free() the buffer. \fB`out_size`\fR is optional. If non-NULL,
+receives the file size in bytes (excluding the trailing null terminator).
+
+.SH RETURN VALUE
+Upon a successful read, returns \fB`VDF_OK`\fR.
+Otherwise, returns an error code.
+
+.SH ERRORS
+.PP
+\fB`VDF_ERR_OPEN`\fR: Failed to open the input file.
+.PP
+\fB`VDF_ERR_IO`\fR: Read/seek error while accessing the file.
+.PP
+\fB`VDF_ERR_MALLOC`\fR: Memory allocation failure.
+
+.SH SEE ALSO
+.BR vdf_parse (3),
+.BR vdf_get (3),
+.BR vdf_get_string (3),
+.BR vdf_get_int (3),
+.BR vdf_get_bool (3),
+.BR vdf_dump_node (3),
+.BR vdf_free_node (3),
+.BR libvdfc_errors (3),
+.BR free (3)

@@ -1,0 +1,35 @@
+.TH vdf_free_node 3
+
+.SH NAME
+vdf_free_node
+
+.SH LIBRARY
+Valve Data Format Parser Library (libvdfc)
+
+.SH SYNOPSIS
+#include <vdfc/vdf.h>
+
+void vdf_free_node(VDFNode *node);
+
+.SH DESCRIPTION
+Recursively free a node and all its descendants.
+Safe to call with node == NULL (no-op)
+
+.SH PARAMETERS
+`VDFNode *node` - The node to free.
+
+.SH RETURN VALUE
+None.
+
+.SH ERRORS
+None.
+
+.SH SEE ALSO
+.BR vdf_read_file (3),
+.BR vdf_parse (3),
+.BR vdf_get (3),
+.BR vdf_get_string (3),
+.BR vdf_get_int (3),
+.BR vdf_get_bool (3),
+.BR vdf_dump_node (3),
+.BR libvdfc_errors (3)

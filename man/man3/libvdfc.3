@@ -1,0 +1,43 @@
+.TH libvdfc 3 "20th July 2026" "version 1.0"
+
+.SH NAME
+libvdfc \- Valve Data Format Parser Library
+
+.SH SYNOPSIS
+.B #include <vdfc/vdf.h>
+
+.SH DESCRIPTION
+The \fB libvdfc \fR library provides a small API for reading and parsing files
+in Valve Data Format (VDF), the key-value format used by Steam configuration and
+manifest files.
+
+A typical usage reads a file into memory with \fBvdf_read_file\fR,
+parses the buffer into a tree of \fBVDFNode\fR with \fBvdf_parse\fR
+walks the tree with \fBvdf_get\fR and its typed variants like
+\fBvdf_get_string\fR, \fBvdf_get_int\fR, \fBvdf_get_bool\fR.
+And releases the tree with \fBvdf_free_node\fR.
+
+The user can also choose to allocate and fill the tree into a buffer
+with \fBvdf_dump_node\fR.
+
+Each \fBVDFNode\fR is either a string value or an object holding child nodes;
+the root node returned by \fB`vdf_parse`\fR owns all memory in the tree,
+which is released in one call by \fBvdf_free_node\fR.
+
+All functions that can fail return a \fB`VDFcode`\fR status;
+see \fBlibvdfc_errors\fR(3) for the list of codes.
+
+.SH SEE ALSO
+.BR vdf_read_file (3),
+.BR vdf_parse (3),
+.BR vdf_get (3),
+.BR vdf_get_string (3),
+.BR vdf_get_int (3),
+.BR vdf_get_bool (3),
+.BR vdf_dump_node (3),
+.BR vdf_free_node (3),
+.BR libvdfc_errors (3)
+
+.SH AUTHOR
+https://github.com/TheLeBerton
+
