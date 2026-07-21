@@ -110,6 +110,90 @@ int vdf_get_bool_recursive(const VDFNode *object, const char *key, int fallback)
 	return (value != 0);
 }
 
+long vdf_get_long(const VDFNode *object, const char *key, long fallback)
+{
+	char *endptr;
+	long  value;
+
+	VDFNode *node = vdf_get(object, key);
+	if (!node || node->type != VDF_VAL_STRING || node->string[0] == '\0')
+		return (fallback);
+	value = strtol(node->string, &endptr, 10);
+	if (*endptr != '\0')
+		return (fallback);
+	return (value);
+}
+
+long vdf_get_long_recursive(const VDFNode *object, const char *key, long fallback)
+{
+	char *endptr;
+	long  value;
+
+	VDFNode *node = vdf_get_recursive(object, key);
+	if (!node || node->type != VDF_VAL_STRING || node->string[0] == '\0')
+		return (fallback);
+	value = strtol(node->string, &endptr, 10);
+	if (*endptr != '\0')
+		return (fallback);
+	return (value);
+}
+
+long long vdf_get_long_long(const VDFNode *object, const char *key, long long fallback)
+{
+	char     *endptr;
+	long long value;
+
+	VDFNode *node = vdf_get(object, key);
+	if (!node || node->type != VDF_VAL_STRING || node->string[0] == '\0')
+		return (fallback);
+	value = strtoll(node->string, &endptr, 10);
+	if (*endptr != '\0')
+		return (fallback);
+	return (value);
+}
+
+long long vdf_get_long_long_recursive(const VDFNode *object, const char *key, long long fallback)
+{
+	char     *endptr;
+	long long value;
+
+	VDFNode *node = vdf_get_recursive(object, key);
+	if (!node || node->type != VDF_VAL_STRING || node->string[0] == '\0')
+		return (fallback);
+	value = strtoll(node->string, &endptr, 10);
+	if (*endptr != '\0')
+		return (fallback);
+	return (value);
+}
+
+unsigned long long vdf_get_ull(const VDFNode *object, const char *key, unsigned long long fallback)
+{
+	char              *endptr;
+	unsigned long long value;
+
+	VDFNode *node = vdf_get(object, key);
+	if (!node || node->type != VDF_VAL_STRING || node->string[0] == '\0')
+		return (fallback);
+	value = strtoull(node->string, &endptr, 10);
+	if (*endptr != '\0')
+		return (fallback);
+	return (value);
+}
+
+unsigned long long vdf_get_ull_recursive(const VDFNode *object, const char *key, unsigned long long fallback)
+{
+	char              *endptr;
+	unsigned long long value;
+
+	VDFNode *node = vdf_get_recursive(object, key);
+	if (!node || node->type != VDF_VAL_STRING || node->string[0] == '\0')
+		return (fallback);
+	value = strtoull(node->string, &endptr, 10);
+	if (*endptr != '\0')
+		return (fallback);
+	return (value);
+}
+
 static VDFcode append_text_to_buffer(char **buf, size_t *len, const char *text)
 {
 	size_t text_len = strlen(text);

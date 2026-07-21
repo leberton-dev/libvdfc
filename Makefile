@@ -16,7 +16,13 @@ TEST_SRC = test/test_lexer.c test/test_read_file.c test/test_parser.c test/test_
 		   test/node/test_get_int.c \
 		   test/node/test_get_int_recursive.c \
 		   test/node/test_get_string.c \
-		   test/node/test_get_string_recursive.c
+		   test/node/test_get_string_recursive.c \
+		   test/node/test_get_long.c \
+		   test/node/test_get_long_recursive.c \
+		   test/node/test_get_long_long.c \
+		   test/node/test_get_long_long_recursive.c \
+		   test/node/test_get_ull.c \
+		   test/node/test_get_ull_recursive.c
 TEST_BIN = $(OBJDIR)/test_runner
 CRITERION_FLAGS = $(shell pkg-config --cflags --libs criterion)
 

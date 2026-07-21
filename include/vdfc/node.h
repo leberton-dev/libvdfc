@@ -87,6 +87,54 @@ int vdf_get_bool(const VDFNode *object, const char *key, int fallback);
 int vdf_get_bool_recursive(const VDFNode *object, const char *key, int fallback);
 
 /**
+ * Look up a direct child of `object` by key and return its `long` value.
+ *
+ * If the child is not found or is not a valid integer, returns `fallback`.
+ */
+long vdf_get_long(const VDFNode *object, const char *key, long fallback);
+
+/**
+ * Look up `key` anywhere in the subtree rooted at `object`, depth-first,
+ * and return its `long` value.
+ *
+ * If no matching valid-int node is found anywhere in the subtree, returns
+ * `fallback`.
+ */
+long vdf_get_long_recursive(const VDFNode *object, const char *key, long fallback);
+
+/**
+ * Look up a direct child of `object` by key and return its `long long` value.
+ *
+ * If the child is not found or is not a valid integer, returns `fallback`.
+ */
+long long vdf_get_long_long(const VDFNode *object, const char *key, long long fallback);
+
+/**
+ * Look up `key` anywhere in the subtree rooted at `object`, depth-first,
+ * and return its `long long` value.
+ *
+ * If no matching valid-int node is found anywhere in the subtree, returns
+ * `fallback`.
+ */
+long long vdf_get_long_long_recursive(const VDFNode *object, const char *key, long long fallback);
+
+/**
+ * Look up a direct child of `object` by key and return its `unsigned long long` value.
+ *
+ * If the child is not found or is not a valid integer, returns `fallback`.
+ */
+unsigned long long vdf_get_ull(const VDFNode *object, const char *key, unsigned long long fallback);
+
+/**
+ * Look up `key` anywhere in the subtree rooted at `object`, depth-first,
+ * and return its `unsigned long long` value.
+ *
+ * If no matching valid-int node is found anywhere in the subtree, returns
+ * `fallback`.
+ */
+unsigned long long vdf_get_ull_recursive(const VDFNode *object, const char *key, unsigned long long fallback);
+
+/**
  * Allocates `dump` and fills with the structure of `root`.
  */
 VDFcode vdf_dump_node(VDFNode *root, char **dump);
